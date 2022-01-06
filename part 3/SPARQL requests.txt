@@ -1,0 +1,105 @@
+#1. Получите все предикаты и объекты сущности dbr:Albert_Einstein:
+SELECT dbr:Albert_Einstein ?b ?c WHERE {
+		dbr:Albert_Einstein ?b ?c.
+}
+
+#2. Найдите город рождения (dbo:birthPlace) (класс dbo:Town) и дату рождения (dbo:birthDate) Эйнштейна:
+SELECT ?birthPlace ?birthDate WHERE {
+	?birthPlace rdf:type dbo:Town. # т.к именно город 
+		dbr:Albert_Einstein dbo:birthPlace ?birthPlace.
+	dbr:Albert_Einstein dbo:birthDate ?birthDate.
+}
+
+#3. Найдите все места работы Эйнштейна (dbo:institution), которые при этом являются инстансом класса dbo:University:
+SELECT ?researchPlaces WHERE {
+	dbr:Albert_Einstein dbo:institution ?researchPlaces.
+	?researchPlaces rdf:type dbo:University.
+}
+
+#4. Найдите, за что известны (dbo:knownFor) одновременно dbr:Albert_Einstein и dbr:Satyendra_Nath_Bose. А за что известны одновременно dbr:Albert_Einstein и dbr:Kip_Thorne?:
+SELECT ?knownFor WHERE {
+	dbr:Albert_Einstein dbo:knownFor ?knownFor.
+	dbr:Satyendra_Nath_Bose dbo:knownFor ?knownFor.
+}
+
+#5. Найдите русский лейбл (rdfs:label) сущности dbr:Albert_Einstein:
+SELECT ?russianLabel WHERE {
+	dbr:Albert_Einstein rdfs:label ?russianLabel FILTER (lang(?russianLabel)="ru").
+}
+
+
+#6. Найдите, сколько наград получил (dbo:award) Эйнштейн:
+SELECT COUNT(*) WHERE {
+	dbr:Albert_Einstein dbo:award ?o.
+}
+
+#7. Cколько наград получил (dbo:award) Эйнштейн, в названии которых есть Medal ?:
+SELECT COUNT(*) WHERE {
+	dbr:Albert_Einstein dbo:award ?awardName FILTER(regex(?awardName, "Medal")).
+}
+
+#8. На каких физиков (dbo:academicDiscipline dbr:Physics) повлиял (dbo:influencedBy) Эйнштейн?:
+SELECT ?scientist WHERE {
+	?scientist dbo:academicDiscipline dbr:Physics.
+	?scientist dbo:influencedBy dbr:Albert_Einstein.
+}
+
+#9. Найдите русскоязычный лейбл явления, за которое известны (dbo:knownFor) Эйнштейн и Александр Столетов (dbr:Aleksandr_Stoletov):
+
+SELECT ?phenomenLabel WHERE {
+	dbr:Aleksandr_Stoletov dbo:knownFor ?phenomen .
+	dbr:Albert_Einstein dbo:knownFor ?phenomen.
+	?phenomen rdfs:label ?phenomenLabel FILTER(lang(?phenomenLabel)="ru").
+}
+
+#10. Используйте property path, чтобы найти, в каких странах (dbo:country) расположены места работы (dbo:institution) Эйнштейна?:
+SELECT DISTINCT ?jobPlace WHERE {
+	dbr:Albert_Einstein dbo:institution/dbo:country ?jobPlace.
+}
+
+#11. Используйте property path, чтобы найти все rdf:type (всех уровней) мест работы (dbo:institution) Эйнштейна?:
+SELECT DISTINCT ?jobType WHERE {
+	dbr:Albert_Einstein dbo:institution/rdf:type ?jobType.
+}
+
+#12. Какие награды получил Эйнштейн, но не получал dbr:Richard_Feynman?:
+SELECT DISTINCT ?awardsEinstein WHERE {
+	dbr:Albert_Einstein dbo:award ?awardsEinstein
+	FILTER NOT EXISTS {dbr:Richard_Feynman dbo:award ?awardsEinstein}.
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
