@@ -1,0 +1,78 @@
+#1. Получите все wdt:-значения сущности Albert Einstein (wd:Q937)
+SELECT ?p ?o WHERE{
+  wd:Q937 ?p ?o.      
+}
+
+#2. Найдите место рождения (P19) и дату рождения (P569) Эйнштейна
+SELECT ?birthPlace ?birthDate WHERE{
+  wd:Q937 wdt:P19 ?birthPlace;
+          wdt:P569 ?birthDate.
+}
+
+#3. Найдите, начиная с какого года (P580) и заканчивая каким (P582) Эйнштейн был гражданином (P27) Швейцарии (wd:Q39)?
+SELECT (YEAR(?startDate) as ?startYear) (YEAR(?endDate) as ?endYear)  WHERE{
+  wd:Q937 p:P27 ?citizenship.
+  ?citizenship ps:P27 wd:Q39.
+  ?citizenship pq:P580 ?startDate;
+          pq:P582 ?endDate.
+}
+
+#4. Найдите все места работы Эйнштейна (P108) после 1910 года
+SELECT ?jobList ?startJobDate WHERE{
+  wd:Q937 p:P108 ?jobList.
+  ?jobList pq:P580 ?startJobDate
+           FILTER(YEAR(?startJobDate) > 1910)
+}
+
+#5. Обучаясь (P69) в каком университете Эйнштейн получил степень (P512) бакалавра (Q787674), специализируясь (P812) на математике (Q853077)? А в каком защитил докторскую (Q849697) по физике (Q413)?
+SELECT ?bsInMathUniversity ?phdInPhysicsUniversity WHERE{
+  wd:Q937 p:P69 ?bsInMathUniversity.
+  ?bsInMathUniversity pq:P512 wd:Q787674;
+              pq:P812 wd:Q853077.
+  wd:Q937 p:P69 ?phdInPhysicsUniversity.
+  ?phdInPhysicsUniversity pq:P512 wd:Q849697;
+                          pq:P812 wd:Q413.
+}
+
+#6. Найдите, сколько раз Эйнштейн был номинирован (P1411) на Нобелевскую премию по физике (Q38104)? И сколько раз он стал ее лауреатом (P166) ?
+SELECT (COUNT(DISTINCT ?nominations) as ?countOfNominations) (COUNT(DISTINCT ?laureats) as ?countOfLaureats)  WHERE{
+  wd:Q937 p:P1411 ?nominations.
+  ?nominations ps:P1411 wd:Q38104.
+  wd:Q937 p:P166 ?laureats.
+  ?laureats ps:P166 wd:Q38104.
+}
+
+#7. На каких физиков (wdt:P106 wd:Q169470) повлиял (P737) Эйнштейн?
+SELECT ?physics WHERE{
+  wd:Q937 wdt:P737 ?physics.
+  ?physics wdt:P106 wd:Q169470
+}
+
+#8. Отобразите на карте все европейские города, где работал (P937) Эйнштейна ?
+#defaultView:Map
+SELECT DISTINCT * WHERE {
+  wd:Q937 wdt:P937 ?cities.
+  ?cities wdt:P17 ?country.
+  ?country wdt:P30 wd:Q46.
+  ?cities wdt:P625 ?geo .
+}
+
+#9. Постройте bubble chart населения стран, где жил (P551) Эйнштейн.
+#defaultView:BubbleChart
+SELECT DISTINCT ?countriesLabels ?populations WHERE {
+  wd:Q937 p:P551 ?places.
+  ?places ps:P551 ?cities.
+  ?cities wdt:P17 ?countries.
+  ?countries rdfs:label ?countriesLabels
+             FILTER(lang(?countriesLabels) = "en").
+  ?countries wdt:P1082 ?populations.
+}
+
+#10. Какие награды получил Эйнштейн, но не получал Ричард Фейнман (Q39246)?
+SELECT DISTINCT ?awards WHERE{
+  wd:Q937 wdt:P166 ?awards
+          FILTER NOT EXISTS{
+            wd:Q39246 wdt:P166 ?awards
+          }
+}
+
