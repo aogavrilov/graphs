@@ -1,0 +1,199 @@
+@prefix schema: <https://www.schema.org> .
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+
+<#MoviesView> rr:sqlQuery """
+SELECT * FROM NETFLIX_TITLES WHERE TYPE = 'Movie'
+""".
+
+<#TVSeriesView> rr:sqlQuery """
+SELECT * FROM NETFLIX_TITLES WHERE TYPE = 'TV Show'
+""".
+
+<#TVSeriesMap>
+    rr:logicalTable <#TVSeriesView> ;
+    rr:subjectMap [
+        rr:template "http://schema.org/TVSeries/{SHOW_ID}" ;
+        rdf:class ex:TVSeries ;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:title;
+        rr:objectMap [ 
+            rr:column "TITLE" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:director;
+        rr:objectMap [ 
+            rr:column "DIRECTOR" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:cast;
+        rr:objectMap [ 
+            rr:column "CAST" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:country;
+        rr:objectMap [ 
+            rr:column "COUNTRY" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:date_added;
+        rr:objectMap [ 
+            rr:column "DATE_ADDED" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:release_year;
+        rr:objectMap [ 
+            rr:column "RELEASE_YEAR" ;
+            rr:datatype xsd:int;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:rating;
+        rr:objectMap [ 
+            rr:column "RATING" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:duration;
+        rr:objectMap [ 
+            rr:column "DURATION" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:listed_in;
+        rr:objectMap [ 
+            rr:column "LISTED_IN" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:description;
+        rr:objectMap [ 
+            rr:column "DESCRIPTION" ;
+            ];
+    ].
+
+<#MoviesMap>
+    rr:logicalTable <#MoviesView> ;
+    rr:subjectMap [
+        rr:template "http://schema.org/Movies/{SHOW_ID}" ;
+        rdf:class ex:Movies ;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:title;
+        rr:objectMap [ 
+            rr:column "TITLE" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:director;
+        rr:objectMap [ 
+            rr:column "DIRECTOR" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:cast;
+        rr:objectMap [ 
+            rr:column "CAST" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:country;
+        rr:objectMap [ 
+            rr:column "COUNTRY" ;
+            rr:language "en" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:date_added;
+        rr:objectMap [ 
+            rr:column "DATE_ADDED" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:release_year;
+        rr:objectMap [ 
+            rr:column "RELEASE_YEAR" ;
+            rr:datatype xsd:int;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:rating;
+        rr:objectMap [ 
+            rr:column "RATING" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:duration;
+        rr:objectMap [ 
+            rr:column "DURATION" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:listed_in;
+        rr:objectMap [ 
+            rr:column "LISTED_IN" ;
+            ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:description;
+        rr:objectMap [ 
+            rr:column "DESCRIPTION" ;
+            ];
+    ].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
