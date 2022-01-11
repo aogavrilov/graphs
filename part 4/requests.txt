@@ -1,15 +1,15 @@
-#1. Получите все wdt:-значения сущности Albert Einstein (wd:Q937)
+#1. РџРѕР»СѓС‡РёС‚Рµ РІСЃРµ wdt:-Р·РЅР°С‡РµРЅРёСЏ СЃСѓС‰РЅРѕСЃС‚Рё Albert Einstein (wd:Q937)
 SELECT ?p ?o WHERE{
   wd:Q937 ?p ?o.      
 }
 
-#2. Найдите место рождения (P19) и дату рождения (P569) Эйнштейна
+#2. РќР°Р№РґРёС‚Рµ РјРµСЃС‚Рѕ СЂРѕР¶РґРµРЅРёСЏ (P19) Рё РґР°С‚Сѓ СЂРѕР¶РґРµРЅРёСЏ (P569) Р­Р№РЅС€С‚РµР№РЅР°
 SELECT ?birthPlace ?birthDate WHERE{
   wd:Q937 wdt:P19 ?birthPlace;
           wdt:P569 ?birthDate.
 }
 
-#3. Найдите, начиная с какого года (P580) и заканчивая каким (P582) Эйнштейн был гражданином (P27) Швейцарии (wd:Q39)?
+#3. РќР°Р№РґРёС‚Рµ, РЅР°С‡РёРЅР°СЏ СЃ РєР°РєРѕРіРѕ РіРѕРґР° (P580) Рё Р·Р°РєР°РЅС‡РёРІР°СЏ РєР°РєРёРј (P582) Р­Р№РЅС€С‚РµР№РЅ Р±С‹Р» РіСЂР°Р¶РґР°РЅРёРЅРѕРј (P27) РЁРІРµР№С†Р°СЂРёРё (wd:Q39)?
 SELECT (YEAR(?startDate) as ?startYear) (YEAR(?endDate) as ?endYear)  WHERE{
   wd:Q937 p:P27 ?citizenship.
   ?citizenship ps:P27 wd:Q39.
@@ -17,14 +17,14 @@ SELECT (YEAR(?startDate) as ?startYear) (YEAR(?endDate) as ?endYear)  WHERE{
           pq:P582 ?endDate.
 }
 
-#4. Найдите все места работы Эйнштейна (P108) после 1910 года
+#4. РќР°Р№РґРёС‚Рµ РІСЃРµ РјРµСЃС‚Р° СЂР°Р±РѕС‚С‹ Р­Р№РЅС€С‚РµР№РЅР° (P108) РїРѕСЃР»Рµ 1910 РіРѕРґР°
 SELECT ?jobList ?startJobDate WHERE{
   wd:Q937 p:P108 ?jobList.
   ?jobList pq:P580 ?startJobDate
            FILTER(YEAR(?startJobDate) > 1910)
 }
 
-#5. Обучаясь (P69) в каком университете Эйнштейн получил степень (P512) бакалавра (Q787674), специализируясь (P812) на математике (Q853077)? А в каком защитил докторскую (Q849697) по физике (Q413)?
+#5. РћР±СѓС‡Р°СЏСЃСЊ (P69) РІ РєР°РєРѕРј СѓРЅРёРІРµСЂСЃРёС‚РµС‚Рµ Р­Р№РЅС€С‚РµР№РЅ РїРѕР»СѓС‡РёР» СЃС‚РµРїРµРЅСЊ (P512) Р±Р°РєР°Р»Р°РІСЂР° (Q787674), СЃРїРµС†РёР°Р»РёР·РёСЂСѓСЏСЃСЊ (P812) РЅР° РјР°С‚РµРјР°С‚РёРєРµ (Q853077)? Рђ РІ РєР°РєРѕРј Р·Р°С‰РёС‚РёР» РґРѕРєС‚РѕСЂСЃРєСѓСЋ (Q849697) РїРѕ С„РёР·РёРєРµ (Q413)?
 SELECT ?bsInMathUniversity ?phdInPhysicsUniversity WHERE{
   wd:Q937 p:P69 ?bsInMathUniversity.
   ?bsInMathUniversity pq:P512 wd:Q787674;
@@ -34,7 +34,7 @@ SELECT ?bsInMathUniversity ?phdInPhysicsUniversity WHERE{
                           pq:P812 wd:Q413.
 }
 
-#6. Найдите, сколько раз Эйнштейн был номинирован (P1411) на Нобелевскую премию по физике (Q38104)? И сколько раз он стал ее лауреатом (P166) ?
+#6. РќР°Р№РґРёС‚Рµ, СЃРєРѕР»СЊРєРѕ СЂР°Р· Р­Р№РЅС€С‚РµР№РЅ Р±С‹Р» РЅРѕРјРёРЅРёСЂРѕРІР°РЅ (P1411) РЅР° РќРѕР±РµР»РµРІСЃРєСѓСЋ РїСЂРµРјРёСЋ РїРѕ С„РёР·РёРєРµ (Q38104)? Р СЃРєРѕР»СЊРєРѕ СЂР°Р· РѕРЅ СЃС‚Р°Р» РµРµ Р»Р°СѓСЂРµР°С‚РѕРј (P166) ?
 SELECT (COUNT(DISTINCT ?nominations) as ?countOfNominations) (COUNT(DISTINCT ?laureats) as ?countOfLaureats)  WHERE{
   wd:Q937 p:P1411 ?nominations.
   ?nominations ps:P1411 wd:Q38104.
@@ -42,13 +42,13 @@ SELECT (COUNT(DISTINCT ?nominations) as ?countOfNominations) (COUNT(DISTINCT ?la
   ?laureats ps:P166 wd:Q38104.
 }
 
-#7. На каких физиков (wdt:P106 wd:Q169470) повлиял (P737) Эйнштейн?
+#7. РќР° РєР°РєРёС… С„РёР·РёРєРѕРІ (wdt:P106 wd:Q169470) РїРѕРІР»РёСЏР» (P737) Р­Р№РЅС€С‚РµР№РЅ?
 SELECT ?physics WHERE{
   wd:Q937 wdt:P737 ?physics.
   ?physics wdt:P106 wd:Q169470
 }
 
-#8. Отобразите на карте все европейские города, где работал (P937) Эйнштейна ?
+#8. РћС‚РѕР±СЂР°Р·РёС‚Рµ РЅР° РєР°СЂС‚Рµ РІСЃРµ РµРІСЂРѕРїРµР№СЃРєРёРµ РіРѕСЂРѕРґР°, РіРґРµ СЂР°Р±РѕС‚Р°Р» (P937) Р­Р№РЅС€С‚РµР№РЅР° ?
 #defaultView:Map
 SELECT DISTINCT * WHERE {
   wd:Q937 wdt:P937 ?cities.
@@ -57,7 +57,7 @@ SELECT DISTINCT * WHERE {
   ?cities wdt:P625 ?geo .
 }
 
-#9. Постройте bubble chart населения стран, где жил (P551) Эйнштейн.
+#9. РџРѕСЃС‚СЂРѕР№С‚Рµ bubble chart РЅР°СЃРµР»РµРЅРёСЏ СЃС‚СЂР°РЅ, РіРґРµ Р¶РёР» (P551) Р­Р№РЅС€С‚РµР№РЅ.
 #defaultView:BubbleChart
 SELECT DISTINCT ?countriesLabels ?populations WHERE {
   wd:Q937 p:P551 ?places.
@@ -68,7 +68,7 @@ SELECT DISTINCT ?countriesLabels ?populations WHERE {
   ?countries wdt:P1082 ?populations.
 }
 
-#10. Какие награды получил Эйнштейн, но не получал Ричард Фейнман (Q39246)?
+#10. РљР°РєРёРµ РЅР°РіСЂР°РґС‹ РїРѕР»СѓС‡РёР» Р­Р№РЅС€С‚РµР№РЅ, РЅРѕ РЅРµ РїРѕР»СѓС‡Р°Р» Р РёС‡Р°СЂРґ Р¤РµР№РЅРјР°РЅ (Q39246)?
 SELECT DISTINCT ?awards WHERE{
   wd:Q937 wdt:P166 ?awards
           FILTER NOT EXISTS{
