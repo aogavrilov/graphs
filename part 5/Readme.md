@@ -5,6 +5,6 @@ Netflix Shows (исходный формат CSV) - как базовую онт
 Для маппинга TV Shows используйте schema:TVSeries и релевантные предикаты, для Movie - schema:Movie.\
 Amazon Music Reviews (исходный формат JSON) - используйте schema:Review как основной класс и используйте релевантные для него предикаты. \
 Для генерации URI используйте конкатенацию reviewerID и asin, например http://example.com/{reviewerID}/{asin}. \
-Для создания URIs, которых нет в schema.org, используйте префикс http://example.com/ \
+Для создания URIs, которых нет в schema.org, используйте префикс http://example.com/ 
 
 Курс: **[KG Course](https://migalkin.github.io/kgcourse2021/)**
