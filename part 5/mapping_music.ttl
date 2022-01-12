@@ -1,0 +1,67 @@
+@prefix schema: <https://www.schema.org/#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql:	<http://semweb.mmlab.be/ns/ql#>.
+
+@base <http://example.com/base/> .
+
+<#MusicMapping> a rr:TriplesMap;
+
+    rml:logicalSource [
+        rml:source "Musical_Instruments_5.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$[*]" ;
+    ];
+    rr:subjectMap [
+        rr:template "http://schema.org/Music/{reviewerID}/{asin}" ;
+        rr:class schema:review ;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:reviewerName;
+        rr:objectMap [ 
+            rml:reference "reviewerName" ;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:helpful;
+        rr:objectMap [ 
+            rml:reference "helpful" ;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:reviewerText;
+        rr:objectMap [ 
+            rml:reference "reviewerText" ;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:overall;
+        rr:objectMap [ 
+            rml:reference "overall" ;
+            rr:datatype xsd:float;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:summary;
+        rr:objectMap [ 
+            rml:reference "summary" ;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:unixReviewTime;
+        rr:objectMap [ 
+            rml:reference "unixReviewTime" ;
+            rr:datatype xsd:int;
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ql:reviewTime;
+        rr:objectMap [ 
+            rml:reference "reviewTime" ;
+        ]
+    ].

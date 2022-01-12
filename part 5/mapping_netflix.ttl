@@ -11,6 +11,7 @@
 SELECT * FROM NETFLIX_TITLES WHERE TYPE = 'Movie'
 """.
 
+
 <#TVSeriesView> rr:sqlQuery """
 SELECT * FROM NETFLIX_TITLES WHERE TYPE = 'TV Show'
 """.
